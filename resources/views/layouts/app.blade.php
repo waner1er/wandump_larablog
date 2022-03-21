@@ -9,11 +9,9 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="{{ asset('js/app.js') }}" defer></script>
 
-    <script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js"></script>
-    <link rel="stylesheet" href="{{asset('vendor/van-ons/laraberg/public/css/laraberg.css')}}">
-
-    <script src="{{ asset('vendor/van-ons/laraberg/public/js/laraberg.js') }}"></script>
+{{--    LAraberg   --}}
+    <link rel="stylesheet" href="{{asset('vendor/laraberg/css/laraberg.css')}}">
+    <script src="{{ asset('vendor/laraberg/js/laraberg.js') }}"></script>
 </head>
 <body>
 
@@ -30,5 +28,7 @@
 
 </main>
 
+<script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js"></script>
 </body>
 </html>

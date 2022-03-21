@@ -11,6 +11,10 @@
     </head>
     <body>
     <main>
+        <!-- Page Heading -->
+        <header>
+            {{ $header }}
+        </header>
             {{ $slot }}
     </main>
     </body>
