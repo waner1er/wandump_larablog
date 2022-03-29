@@ -6,7 +6,11 @@
     @endslot
     @if(!$posts->isEmpty())
         @foreach($posts as $post)
-            {{ $post->title }}
+           <div data-expand-target>
+               <h2>{{ $post->title }}</h2>
+               <div>{!! $post->body !!}</div>
+               <a href="{{ route('posts.show', ['post'=>$post->id]) }}" data-expand-link>eree</a>
+           </div>
         @endforeach
     @else
         il n' y a pas enciore d'article ici

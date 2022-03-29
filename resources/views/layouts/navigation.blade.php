@@ -5,6 +5,14 @@
             <a href="{{ route('dashboard') }}">
                 {{ __('Dashboard') }}
             </a>
+            |
+            <a href="{{ route('posts.dashboard.index') }}">
+                {{ __('posts') }}
+            </a>
+            |
+            <a href="{{ route('welcome') }}">
+                {{ __('retour au site') }}
+            </a>
         </li>
     </ul>
 

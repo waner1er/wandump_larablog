@@ -9,14 +9,13 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="{{ asset('js/app.js') }}" defer></script>
 
-{{--    LAraberg   --}}
-    <link rel="stylesheet" href="{{asset('vendor/laraberg/css/laraberg.css')}}">
-    <script src="{{ asset('vendor/laraberg/js/laraberg.js') }}"></script>
+    @livewireStyles
 </head>
-<body>
+<body class="admin-layout">
 
 @include('layouts.navigation')
-
+<br>
+<hr>
 <!-- Page Heading -->
 <header>
     {{ $header }}
@@ -25,10 +24,22 @@
 <!-- Page Content -->
 <main>
     {{ $slot }}
+    <form method="post" action="" enctype="multipart/form-data">
+        @csrf
 
+    </form>
 </main>
-
-<script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js"></script>
+@livewireScripts
+<script src="https://cdn.ckeditor.com/ckeditor5/33.0.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .then( editor => {
+            console.log( editor );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 </body>
 </html>

@@ -1,9 +1,12 @@
-@component('layouts.guest')
-    <h1>Welcome</h1>
-    @auth
+<x-guest-layout>
+    @slot('header')
+        <h2>
+            {{ __('Bienvenue ') }}
+        </h2>
+    @endslot    @auth
         <a href="{{ url('/dashboard') }}">Dashboard</a>
     @else
         <a href="{{ route('login') }}">Login</a>
         <a href="{{ route('register') }}">Register</a>
     @endauth
-@endcomponent
+</x-guest-layout>
