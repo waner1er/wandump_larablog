@@ -11,11 +11,7 @@
 </head>
 <body class="public-layout">
 <main>
-    <x-public-navigation>
-
-    </x-public-navigation>
-    <br>
-    <hr>
+    <x-public-navigation></x-public-navigation>
     <!-- Page Heading -->
 
     {{ $slot }}

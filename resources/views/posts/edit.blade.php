@@ -1,16 +1,44 @@
 <x-app-layout>
     @slot('header')
-        editer un post
-    @endslot
+        <h2>
+            {{ __('post.edit') }}
+        </h2>
+    @endslot|
+    <form action="{{ route('posts.update', ['post' => $post]) }}" method="POST">
+        @csrf
+        <div>
+            <div>
+                @if (Session::has('success'))
+                    <div>
+                        <button type="button">×</button>
+                        {{ Session::get('success') }}
+                    </div>
+                @elseif(Session::has('failed'))
+                    <div>
+                        <button type="button">×</button>
+                        {{ Session::get('failed') }}
+                    </div>
+                @endif
+                <div>
+                    <div>
+                        <h4> CK Editor 4 in Laravel 8 </h4>
+                    </div>
+                    <div>
+                        <div>
+                            <label> Title </label>
+                            <input type="text" name="title" value="{{ $post->title }}">
+                        </div>
+                        <div>
+                            <label> Body </label>
+                            <textarea id="description" placeholder="Enter the Description" name="description">{{ $post->description }}</textarea>
+                        </div>
+                    </div>
 
-        <form method="post" action="{{ route("post.update", ['post'=>$post]) }}">
-            @csrf
-            <input type="text" value="{{$post->title}}" name="title">
-            @error('title') <p>{{$message}}</p> @enderror
-
-            <textarea id="editor" name="body" >{{$post->body}}</textarea>
-            @error('body') <p>{{$message}}</p> @enderror
-
-            <input type="submit">
-        </form>
+                    <div>
+                        <button type="submit"> Save </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </x-app-layout>

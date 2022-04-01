@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
-use App\Http\Livewire\PostEdit;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,23 +17,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('welcome');
+})->name('home');
+
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 
+Route::get('/admin/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'admin'])->name('dashboard');
+
+Route::get('/dashboard/posts', [PostController::class,"adminIndex"])->middleware(['auth','admin'])->name("dashboard.posts.index");
+Route::get('/dashboard/post/create', [PostController::class, 'create'])->middleware(['auth', 'admin'])->name('posts.create');
+Route::post('/posts/store', [PostController::class, 'store'])->middleware('auth', 'admin')->name('posts.store');
+
+Route::get('/dashboard/posts/{post}/edit', [PostController::class, 'edit'])->middleware('auth','admin')->name('posts.edit');
+Route::post('/posts/update', [PostController::class, 'index'])->middleware('auth', 'admin')->name('posts.update');
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-Route::get('dashboard/posts', [PostController::class, 'dashboardIndex'])->middleware(['auth'])->name('posts.dashboard.index');
-Route::get('dashboard/posts/create', [PostController::class, 'create'])->middleware(['auth'])->name('post.create');
-Route::post('dashboard/post/create', [PostController::class, 'store'])->middleware(['auth'])->name('post.store');
-Route::get('dashboard/posts/{post}/edit', [PostController::class, 'edit'])->middleware(['auth'])->name('posts.edit');
-Route::post('dashboard/posts/{post}/edit', [PostController::class, 'update'])->middleware(['auth'])->name('post.update');
-
+Route::post('/posts/destroy', [PostController::class, 'destroy'])->middleware('auth')->name('posts.destroy');
 
 
 require __DIR__.'/auth.php';

@@ -1,4 +1,7 @@
 <x-guest-layout>
-    <h1>{{ $post->title }}</h1>
-    <div>{!! $post->body !!}</div>
+
+    <h2>{{$post->title }}</h2>
+    <div>
+        {!! $post->description !!}
+    </div>
 </x-guest-layout>

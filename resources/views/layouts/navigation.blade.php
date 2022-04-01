@@ -2,16 +2,20 @@
     <!-- Primary Navigation Menu -->
     <ul>
         <li>
-            <a href="{{ route('dashboard') }}">
-                {{ __('Dashboard') }}
-            </a>
-            |
-            <a href="{{ route('posts.dashboard.index') }}">
-                {{ __('posts') }}
-            </a>
-            |
-            <a href="{{ route('welcome') }}">
+            <a href="{{ route('home') }}">
                 {{ __('retour au site') }}
+            </a>
+            |
+            <a href="{{ route('dashboard') }}">
+                {{ __('dashboard') }}
+            </a>
+            |
+            <a href="{{ route('posts.create') }}">
+                {{ __('post.create') }}
+            </a>
+            |
+            <a href="{{ route('dashboard.posts.index') }}">
+                {{ __('posts.index') }}
             </a>
         </li>
     </ul>

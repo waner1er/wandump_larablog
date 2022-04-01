@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+
+use function Ramsey\Uuid\v1;
 
 class PostController extends Controller
 {
@@ -16,7 +16,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('posts.index', ['posts' => Post::all()]);
+        $posts = Post::with('ageCategory');
+        return view('posts.index', ['posts'=>$posts]);
     }
 
     /**
@@ -24,18 +25,28 @@ class PostController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function dashboardIndex()
+    public function adminIndex()
     {
-        return view('admin.posts.index', ['posts' => Post::all()]);
+        return view('posts.adminIndex', ['posts'=>Post::all()]);
     }
 
+/**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+ */
+    public function show(Post $post)
+    {
+        return view('posts.show', ['post' => $post]);
+    }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create(): View
+    public function create()
     {
         return view('posts.create');
     }
@@ -43,38 +54,61 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required | min:6',
-            'body' => 'required  | max:255'
-        ]);
+        $postRequest = array(
+            "title" => $request->title,
+            "description" => $request->description
+        );
+        $post = Post::create($postRequest);
 
-        $post = Post::create([
-            'title' => $request->title,
-            'body' => $request->body
-        ]);
+        if ($post) {
+            return back()->with("success", "Success! Post created");
+        }
 
-        $post->save();
-
-        return redirect()->route("posts.dashboard.index")->with('success', '');
+        return back()->with("failed", "Failed! Post not created");
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\Post $post
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View
+     * Upload image
+     * @param request
      */
-    public function show(Post $post)
+    public function uploadImage(Request $request)
     {
-        return view('posts.show', ['post' => $post]);
+        if($request->hasFile('upload')) {
+            //get filename with extension
+            $filenamewithextension = $request->file('upload')->getClientOriginalName();
+
+            //get filename without extension
+            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+
+            //get file extension
+            $extension = $request->file('upload')->getClientOriginalExtension();
+
+            //filename to store
+            $filenametostore = $filename.'_'.time().'.'.$extension;
+
+            //Upload File
+            $request->file('upload')->move('public/uploads', $filenametostore);
+
+            $CKEditorFuncNum = $request->input('CKEditorFuncNum');
+            $url = asset('public/uploads/'.$filenametostore);
+            $message = 'File uploaded successfully';
+            $result = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$message')</script>";
+
+            // Render HTML output
+            @header('Content-type: text/html; charset=utf-8');
+            echo $result;
+        }
     }
 
-    /**
+
+
+
+     /**
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Post $post
@@ -96,26 +130,29 @@ class PostController extends Controller
     {
         $rules = [
             'title' => 'required|string',
-            "body" => 'required',
+            "description" => 'required',
         ];
         $this->validate($request, $rules);
 //        dd($request);
         $post->update([
             "title" => $request->title,
-            "body" => $request->body
+            "description" => $request->description
         ]);
-        return redirect()->route('posts.dashboard.index');
+              return redirect()->route('posts');
 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Post $post
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+        return redirect('/');
+
     }
 }

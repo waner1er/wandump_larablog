@@ -13,7 +13,7 @@
     </ul>
     @auth()
         <p>
-            Welcome {{ Auth::user()->first_name }}
+            Welcome {{ Auth::user()->name }}
         </p>
         <!-- Authentication -->
         <form method="POST" action="{{ route('logout') }}">

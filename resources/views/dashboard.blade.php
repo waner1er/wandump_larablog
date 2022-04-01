@@ -4,6 +4,5 @@
             {{ __('Logged In Dashboard') }}
         </h2>
     @endslot
-    You're logged in!
-
+    
 @endcomponent

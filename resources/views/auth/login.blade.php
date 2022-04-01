@@ -1,8 +1,7 @@
-@component('layouts.guest')
-    @component('components.auth-card')
+<x-guest-layout>
+    <x-auth-card>
         <!-- Session Status -->
         @include('includes.auth-session-status')
-
         <!-- Validation Errors -->
         @include('includes.auth-validation-errors')
 
@@ -20,10 +19,7 @@
             <div>
                 <label for="password">{{ __('Password') }}</label>
 
-                <input id="password"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password">
+                <input id="password" type="password" name="password" required autocomplete="current-password">
             </div>
 
             <!-- Remember Me -->
@@ -45,5 +41,5 @@
                 </button>
             </div>
         </form>
-    @endcomponent
-@endcomponent
+    </x-auth-card>
+</x-guest-layout>
