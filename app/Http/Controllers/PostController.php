@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -16,8 +17,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('ageCategory');
-        return view('posts.index', ['posts'=>$posts]);
+        $posts = Post::all();
+        $categories = Category::all();
+        return view('posts.index', ['posts' => $posts, 'categories'=>$categories]);
     }
 
     /**
@@ -27,15 +29,15 @@ class PostController extends Controller
      */
     public function adminIndex()
     {
-        return view('posts.adminIndex', ['posts'=>Post::all()]);
+        return view('posts.adminIndex', ['posts' => Post::all()]);
     }
 
-/**
+    /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
- */
+     */
     public function show(Post $post)
     {
         return view('posts.show', ['post' => $post]);
@@ -54,7 +56,7 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
@@ -78,7 +80,7 @@ class PostController extends Controller
      */
     public function uploadImage(Request $request)
     {
-        if($request->hasFile('upload')) {
+        if ($request->hasFile('upload')) {
             //get filename with extension
             $filenamewithextension = $request->file('upload')->getClientOriginalName();
 
@@ -89,13 +91,13 @@ class PostController extends Controller
             $extension = $request->file('upload')->getClientOriginalExtension();
 
             //filename to store
-            $filenametostore = $filename.'_'.time().'.'.$extension;
+            $filenametostore = $filename . '_' . time() . '.' . $extension;
 
             //Upload File
             $request->file('upload')->move('public/uploads', $filenametostore);
 
             $CKEditorFuncNum = $request->input('CKEditorFuncNum');
-            $url = asset('public/uploads/'.$filenametostore);
+            $url = asset('public/uploads/' . $filenametostore);
             $message = 'File uploaded successfully';
             $result = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$message')</script>";
 
@@ -106,9 +108,7 @@ class PostController extends Controller
     }
 
 
-
-
-     /**
+    /**
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Post $post
@@ -138,14 +138,14 @@ class PostController extends Controller
             "title" => $request->title,
             "description" => $request->description
         ]);
-              return redirect()->route('posts');
+        return redirect()->route('posts');
 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
