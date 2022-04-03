@@ -3,42 +3,41 @@
         <h2>
             {{ __('post.edit') }}
         </h2>
-    @endslot|
-    <form action="{{ route('posts.update', ['post' => $post]) }}" method="POST">
+    @endslot
+    <form action="{{ route('posts.update', ['post' => $post]) }}" method="post">
         @csrf
         <div>
             <div>
-                @if (Session::has('success'))
-                    <div>
-                        <button type="button">×</button>
-                        {{ Session::get('success') }}
-                    </div>
-                @elseif(Session::has('failed'))
-                    <div>
-                        <button type="button">×</button>
-                        {{ Session::get('failed') }}
-                    </div>
-                @endif
-                <div>
-                    <div>
-                        <h4> CK Editor 4 in Laravel 8 </h4>
-                    </div>
-                    <div>
-                        <div>
-                            <label> Title </label>
-                            <input type="text" name="title" value="{{ $post->title }}">
-                        </div>
-                        <div>
-                            <label> Body </label>
-                            <textarea id="description" placeholder="Enter the Description" name="description">{{ $post->description }}</textarea>
-                        </div>
-                    </div>
-
-                    <div>
-                        <button type="submit"> Save </button>
-                    </div>
-                </div>
+                <label> Title </label>
+                <input type="text" name="title" value="{{ $post->title }}">
             </div>
+            @error('title')
+            <div>{{ $message }}</div> @enderror
+
+            <select type="select" id="category_id" name="category_id">
+                <option value="{{ $post->category->id  }}">Actuel : {{ $post->category->name }}</option>
+                @foreach($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                @endforeach
+            </select>
+            @error('category_id')
+            <div>{{$message}}</div> @enderror
+
+            <select type="select" id="age_id" name="age_id">
+                <option value="{{  $post->age->id }} ">Actuel : {{ $post->age->name }}</option>
+                @foreach($ages as $age)
+                    <option value="{{$age->id}}">{{$age->name}}</option>
+                @endforeach
+            </select>
+            @error('age_id')
+            <div>{{$message}}</div>@enderror
+
+            <textarea id="editor" placeholder="Enter the Description" name="description">
+                                {{ $post->description }}
+                            </textarea>
+            @error('description')
+            <div>{{ $message }}</div> @enderror
         </div>
+        <button type="submit">{{ __('post.save') }}</button>
     </form>
 </x-app-layout>

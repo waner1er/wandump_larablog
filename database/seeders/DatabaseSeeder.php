@@ -41,26 +41,23 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
             'role' => "user"
         ]);
-        DB::table('categories')->insert([
-            [
-                'name'=> 'baby',
-            ],
-            [
-                'name'=> 'mat_child',
-            ],
-            [
-                'name'=> 'elem_child',
-            ],
-            [
-                'name'=> 'pre_teen',
-            ],
-            [
-                'name'=> 'teenager',
-            ],
-            [
-                'name'=> 'other',
-            ]
+        DB::table('ages')->insert([
+            ['name' => 'baby',],
+            ['name' => 'mat_child',],
+            ['name' => 'elem_child',],
+            ['name' => 'pre_teen',],
+            ['name' => 'teenager',],
+            ['name' => 'family',],
         ]);
+        DB::table('categories')->insert([
+            ['name' => 'unicorn_and_princess',],
+            ['name' => 'zen',],
+            ['name' => 'monsters_and_sorcerers',],
+            ['name' => 'cute_animals',],
+            ['name' => 'mom_and_dad',],
+        ]);
+
+
 
     }
 }

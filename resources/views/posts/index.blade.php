@@ -1,12 +1,13 @@
 <x-guest-layout>
     <div class="archive-posts">
-        @foreach($categories as $category)
+{{--        {{dd($posts)}}--}}
+        @foreach($ages as $age)
             <div class="post">
-                <h2>{{$category->name}}</h2>
+                <h2>{{$age->name}}</h2>
                 <div class="post-grid">
-                    @foreach($category->post as $post)
+                    @foreach($age->post as $post)
                         <div>
-                            {{--                        {{$post->category?->name}}--}}
+                            {{$post->category?->name}}
                             <h3> {{$post->title}}</h3>
                             <p>{{$post->description}}</p>
                         </div>

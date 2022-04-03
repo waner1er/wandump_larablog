@@ -9,6 +9,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="{{ asset('js/app.js') }}" defer></script>
+    @livewireStyles
 </head>
 
 <body class="admin-layout">
@@ -31,6 +32,20 @@
     </main>
     <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
 
+    <script>
+        CKEDITOR.replace('upload_image', {
+            filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form',
+            removeButtons: 'Cut,Undo,Copy,Redo,Paste,PasteText,PasteFromWord,Replace,Find,SelectAll,Scayt,Form,' +
+                'Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Templates,Save,Source,NewPage,ExportPdf,Preview,Print,Bold,CopyFormatting,RemoveFormat,Italic,Underline,Strike,Subscript,Superscript,NumberedList,BulletedList,About,Maximize,TextColor,BGColor,ShowBlocks,Styles,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,Link,Unlink,Anchor,Format,Font,FontSize,BidiLtr,JustifyLeft,Blockquote,Outdent,Indent,CreateDiv,JustifyCenter,BidiRtl,Language,JustifyBlock,JustifyRight',
+
+        });
+        CKEDITOR.replace('editor', {
+            filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form'
+        });
+    </script>
+@livewireScripts
 </body>
 
 </html>

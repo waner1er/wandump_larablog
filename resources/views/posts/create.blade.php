@@ -1,47 +1,45 @@
 <x-app-layout>
     @slot('header')
-    <h2>
-        {{ __('post.create') }}
-    </h2>
-@endslot|
-    <a href="{{ route('posts.index') }}" class="btn btn-danger"> Back </a>
-
-    <form action="{{ route('posts.store') }}" method="POST">
+        <h2>
+            {{ __('post.create') }}
+        </h2>
+    @endslot
+        <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div>
             <div>
-                <div>
-                    <div>
-                        <h4> CK Editor 4 in Laravel 8 </h4>
-                    </div>
-                    <div>
-                        <div>
-                            <label> Title </label>
-                            <input type="text" name="title" placeholder="Enter the Title">
-                        </div>
-                        <div>
-                            <label> age </label>
-                            <select type="select" name="age">
-                                <option value="">--Please choose an option--</option>
-                                <option value="baby">Bébé</option>
-                                <option value="mat_child">3-6 ans</option>
-                                <option value="elem_child">7-10 ans</option>
-                                <option value="pre_teen">11-13 ans</option>
-                                <option value="teen">14-17</option>
-                                <option value="other">Autres</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label> Body </label>
-                            <textarea id="description" placeholder="Enter the Description" name="description"></textarea>
-                        </div>
-                    </div>
-
-                    <div>
-                        <button type="submit"> Save </button>
-                    </div>
-                </div>
+                <label> Title </label>
+                <input type="text" name="title">
             </div>
+            @error('title')
+            <div>{{ $message }}</div> @enderror
+
+            <textarea id="upload_image" placeholder="upload image" name="image"></textarea>
+            @error('description')
+            <div>{{ $message }}</div> @enderror
+
+            <select type="select" id="category_id" name="category_id">
+                <option value="#">Choose</option>
+                @foreach($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                @endforeach
+            </select>
+            @error('category_id')
+            <div>{{$message}}</div> @enderror
+
+            <select type="select" id="age_id" name="age_id">
+                <option value="#">Choose</option>
+            @foreach($ages as $age)
+                    <option value="{{$age->id}}">{{$age->name}}</option>
+                @endforeach
+            </select>
+            @error('age_id')
+            <div>{{$message}}</div>@enderror
+
+            <textarea id="editor" placeholder="Enter the Description" name="description"></textarea>
+            @error('description')
+            <div>{{ $message }}</div> @enderror
         </div>
+        <button type="submit">{{ __('post.save') }}</button>
     </form>
 </x-app-layout>

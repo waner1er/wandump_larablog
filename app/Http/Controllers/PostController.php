@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Age;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -18,8 +19,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        $categories = Category::all();
-        return view('posts.index', ['posts' => $posts, 'categories'=>$categories]);
+        $ages = Age::all();
+        return view('posts.index', ['posts' => $posts, 'ages' => $ages]);
     }
 
     /**
@@ -29,7 +30,9 @@ class PostController extends Controller
      */
     public function adminIndex()
     {
-        return view('posts.adminIndex', ['posts' => Post::all()]);
+        $posts = Post::all();
+        $ages = Age::all();
+        return view('posts.adminIndex', ['posts' => $posts, 'ages' => $ages]);
     }
 
     /**
@@ -50,7 +53,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+
+        return view('posts.create', [
+            'posts' => Post::all(),
+            'categories' => Category::all(),
+            'ages' => Age::all()]);
     }
 
     /**
@@ -61,14 +68,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $postRequest = array(
-            "title" => $request->title,
-            "description" => $request->description
-        );
-        $post = Post::create($postRequest);
+        $validated = $request->validate([
+            'title' => 'required|unique:posts|max:255',
+            'description' => 'required',
+            'category_id' => 'required',
+            'age_id' => 'required',
+            'image' => 'required',
+        ]);
 
+
+        $post = Post::create($validated);
         if ($post) {
-            return back()->with("success", "Success! Post created");
+            return redirect()->route('dashboard.posts.index')->with("success", "Success! Post created");
         }
 
         return back()->with("failed", "Failed! Post not created");
@@ -78,35 +89,24 @@ class PostController extends Controller
      * Upload image
      * @param request
      */
-    public function uploadImage(Request $request)
-    {
-        if ($request->hasFile('upload')) {
-            //get filename with extension
-            $filenamewithextension = $request->file('upload')->getClientOriginalName();
-
-            //get filename without extension
-            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
-
-            //get file extension
+    public function uploadImage(Request $request) {
+        if($request->hasFile('upload')) {
+            $originName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($originName, PATHINFO_FILENAME);
             $extension = $request->file('upload')->getClientOriginalExtension();
+            $fileName = $fileName.'_'.time().'.'.$extension;
 
-            //filename to store
-            $filenametostore = $filename . '_' . time() . '.' . $extension;
-
-            //Upload File
-            $request->file('upload')->move('public/uploads', $filenametostore);
+            $request->file('upload')->move(public_path('images'), $fileName);
 
             $CKEditorFuncNum = $request->input('CKEditorFuncNum');
-            $url = asset('public/uploads/' . $filenametostore);
-            $message = 'File uploaded successfully';
-            $result = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$message')</script>";
+            $url = asset('images/'.$fileName);
+            $msg = 'Image uploaded successfully';
+            $response = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
 
-            // Render HTML output
             @header('Content-type: text/html; charset=utf-8');
-            echo $result;
+            echo $response;
         }
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -116,7 +116,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit', ['post' => $post]);
+
+        return view('posts.edit', ['post' => $post, 'categories' => Category::all(), 'ages' =>Age::all()]);
     }
 
     /**
@@ -128,19 +129,17 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $rules = [
-            'title' => 'required|string',
-            "description" => 'required',
-        ];
-        $this->validate($request, $rules);
-//        dd($request);
-        $post->update([
-            "title" => $request->title,
-            "description" => $request->description
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'category_id' => 'required',
+            'age_id' => 'required',
         ]);
-        return redirect()->route('posts');
 
+        $post->update($request->all());
+        return redirect()->route('dashboard.posts.index')->with("success", "Success! Post updated");
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -148,7 +147,8 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         $post = Post::find($id);
         $post->delete();

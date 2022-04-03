@@ -20,7 +20,9 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->name(),
             'description' => $this->faker->text(),
-            'category_id' =>$this->faker->numberBetween($min = 1, $max = 10)
+            'category_id' =>$this->faker->numberBetween($min = 1, $max = 6),
+            'age_id' =>$this->faker->numberBetween($min = 1, $max = 5),
+            'image' => '<img src="https://picsum.photos/150/150?random" alt="">',
 
         ];
     }
