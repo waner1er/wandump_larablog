@@ -12,6 +12,15 @@ class Post extends Model
     protected $fillable = [
         'title',
         'description',
+        'category_id',
+        'age_id',
+        'image',
     ];
 
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
+    public function age() {
+        return $this->belongsTo(Age::class);
+    }
 }
