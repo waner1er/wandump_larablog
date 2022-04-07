@@ -1,0 +1,1 @@
+{{$column->age->name}}

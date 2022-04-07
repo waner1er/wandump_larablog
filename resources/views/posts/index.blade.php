@@ -1,20 +1,16 @@
 <x-guest-layout>
     <div class="archive-posts">
-{{--        {{dd($posts)}}--}}
-        @foreach($ages as $age)
-            <div class="post">
-                <h2>{{$age->name}}</h2>
-                <div class="post-grid">
-                    @foreach($age->post as $post)
-                        <div>
-                            {{$post->category?->name}}
-                            <h3> {{$post->title}}</h3>
-                            <p>{{$post->description}}</p>
-                        </div>
-                    @endforeach
+        {{--        {{dd($posts)}}--}}
+        <div class="post-grid">
+            @foreach($posts as $post)
+                <div>
+                    {!! $post->image !!}
+                    <p>{{$post->category->name}}</p>
+                    <h2>{{$post->title}}</h2>
+                    <div>{{$post->description}}</div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
     </div>
 
 </x-guest-layout>
@@ -23,29 +19,10 @@
     html, body {
         margin: 0;
     }
-
-    .archive-posts {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-
-    }
-
-    .post {
-        flex: 40%;
-
-    }
-
-    .post h2 {
-        text-align: center;
-    }
-
     .post-grid {
-        flex-wrap: wrap;
         display: grid;
         grid-gap: 2rem;
         grid-template-columns: repeat(3, 1fr);
         padding: 1rem;
-        border: 1px solid red;
     }
 </style>
