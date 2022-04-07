@@ -5,11 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.tailwindcss.com"></script>
 
+    @livewireStyles
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    @livewireStyles
+
+    <script src="{{ asset('js/app.js') }}" defer    ></script>
 </head>
 
 <body class="admin-layout">
@@ -46,6 +48,7 @@
         });
     </script>
 @livewireScripts
+
 </body>
 
 </html>

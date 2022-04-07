@@ -18,9 +18,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $featured_posts = Post::query()
+            ->take(10)
+            ->get();
         $ages = Age::all();
-        return view('posts.index', ['posts' => $posts, 'ages' => $ages]);
+        $categories = Category::all();
+        return view('posts.index', ['posts' => $featured_posts, 'ages' => $ages, 'categories' => $categories]);
     }
 
     /**
@@ -32,7 +35,8 @@ class PostController extends Controller
     {
         $posts = Post::all();
         $ages = Age::all();
-        return view('posts.adminIndex', ['posts' => $posts, 'ages' => $ages]);
+        $categories = Category::all();
+        return view('posts.adminIndex',['posts' => $posts, 'ages' => $ages, 'categories' => $categories]);
     }
 
     /**
