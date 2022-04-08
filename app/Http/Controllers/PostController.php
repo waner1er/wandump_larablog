@@ -93,24 +93,24 @@ class PostController extends Controller
      * Upload image
      * @param request
      */
-    public function uploadImage(Request $request) {
-        if($request->hasFile('upload')) {
-            $originName = $request->file('upload')->getClientOriginalName();
-            $fileName = pathinfo($originName, PATHINFO_FILENAME);
-            $extension = $request->file('upload')->getClientOriginalExtension();
-            $fileName = $fileName.'_'.time().'.'.$extension;
-
-            $request->file('upload')->move(public_path('images'), $fileName);
-
-            $CKEditorFuncNum = $request->input('CKEditorFuncNum');
-            $url = asset('images/'.$fileName);
-            $msg = 'Image uploaded successfully';
-            $response = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
-
-            @header('Content-type: text/html; charset=utf-8');
-            echo $response;
-        }
-    }
+//    public function uploadImage(Request $request) {
+//        if($request->hasFile('upload')) {
+//            $originName = $request->file('upload')->getClientOriginalName();
+//            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+//            $extension = $request->file('upload')->getClientOriginalExtension();
+//            $fileName = $fileName.'_'.time().'.'.$extension;
+//
+//            $request->file('upload')->move(asset('public/thumbnails'), $fileName);
+//
+//            $CKEditorFuncNum = $request->input('CKEditorFuncNum');
+//            $url = asset('images/'.$fileName);
+//            $msg = 'Image uploaded successfully';
+//            $response = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
+//
+//            @header('Content-type: text/html; charset=utf-8');
+//            echo $response;
+//        }
+//    }
 
     /**
      * Show the form for editing the specified resource.
@@ -138,6 +138,7 @@ class PostController extends Controller
             'description' => 'required',
             'category_id' => 'required',
             'age_id' => 'required',
+            'featured' => 'boolean',
         ]);
 
         $post->update($request->all());

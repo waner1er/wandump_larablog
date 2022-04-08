@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Post;
+use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
+use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 
 
 class PostTable extends DataTableComponent
@@ -24,13 +26,16 @@ class PostTable extends DataTableComponent
     {
 
         return [
-
+            Column::make('Title', 'title')
+                ->sortable()
+                ->searchable(),
+            BooleanColumn::make('featured'),
             Column::make('category', 'category.name')
                 ->sortable()
                 ->searchable(),
             Column::make('age', 'age.name')
-            ->sortable()
-            ->searchable(),
+                ->sortable()
+                ->searchable(),
 
             Column::make("Image", "image")
                 ->format(function ($value) {
