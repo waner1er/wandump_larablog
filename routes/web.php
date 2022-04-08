@@ -25,8 +25,6 @@ Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')
 
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'admin'])->name('dashboard');
 
-Route::post('upload_image',[PostController::class,'uploadImage'])->name('upload');
-
 Route::get('/dashboard/posts', [PostController::class,"adminIndex"])->middleware(['auth','admin'])->name("dashboard.posts.index");
 Route::get('/dashboard/post/create', [PostController::class, 'create'])->middleware(['auth', 'admin'])->name('posts.create');
 Route::post('/posts/store', [PostController::class, 'store'])->middleware('auth', 'admin')->name('posts.store');

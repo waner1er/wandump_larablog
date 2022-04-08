@@ -14,8 +14,9 @@
             @error('title')
             <div>{{ $message }}</div> @enderror
 
+            <label for="image"> Image </label>
             <textarea id="upload_image" placeholder="upload image" name="image"></textarea>
-            @error('description')
+            @error('image')
             <div>{{ $message }}</div> @enderror
 
             <select type="select" id="category_id" name="category_id">
