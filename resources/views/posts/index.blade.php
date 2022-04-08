@@ -1,13 +1,22 @@
 <x-guest-layout>
-    <div class="archive-posts">
+    <div class="archive-posts container">
         {{--        {{dd($posts)}}--}}
-        <div class="post-grid">
-            @foreach($posts as $post)
-                <div>
-                    {!! $post->image !!}
-                    <p>{{$post->category->name}}</p>
-                    <h2>{{$post->title}}</h2>
-                    <div>{{$post->description}}</div>
+        <div class="ages-grid">
+            @foreach($ages as $age)
+                <div class="age">
+                    <h2>{{$age->name}}</h2>
+                    <div class="age-grid age__box" >
+                        @foreach($age->featured_posts as $post)
+                            <div class="age-item" data-expand-target>
+                                {!! $post->image !!}
+                                <div>
+                                   <h3>{{$post->title}}</h3>
+                                    {{$post->description}}
+                                </div>
+                                <a href="{{route('posts.show', ['post'=>$post->id])}}" data-expand-link></a>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             @endforeach
         </div>
@@ -15,14 +24,3 @@
 
 </x-guest-layout>
 
-<style>
-    html, body {
-        margin: 0;
-    }
-    .post-grid {
-        display: grid;
-        grid-gap: 2rem;
-        grid-template-columns: repeat(3, 1fr);
-        padding: 1rem;
-    }
-</style>

@@ -1,11 +1,182 @@
-/* Toggle A */
-input:checked ~ .dot {
-  transform: translateX(100%);
-  background-color: #48bb78;
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font-family: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  vertical-align: baseline;
 }
 
-/* Toggle B */
-input:checked ~ .dot {
-  transform: translateX(100%);
-  background-color: #48bb78;
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+[data-expand-target] {
+  position: relative;
+}
+
+[data-expand-link]:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
+
+/*--------------------------------------------------------------
+# Breakpoint
+--------------------------------------------------------------*/
+/*--------------------------------------------------------------
+# Variables Communes
+--------------------------------------------------------------*/
+/*--- Font ---*/
+@font-face {
+  font-family: WhizKid;
+  src: url(/fonts/WhizKidRegular-8aGB.ttf?abb60443d273ad2d66dd1eaf1d32c8a6) format("truetype");
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face {
+  font-family: Haeresletter;
+  src: url(/fonts/HaeresletterRegular.otf?b48e0e1629cf31ced69d969fdf6ef97a) format("opentype");
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face {
+  font-family: SchoolTeacher;
+  src: url(/fonts/SchoolTeacherRegular.ttf?bc4763319b14cfae9a6c2f58619e548a) format("truetype");
+  font-style: normal;
+  font-weight: 300;
+}
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: SchoolTeacher, sans-serif;
+  font-size: 2rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Haeresletter, sans-serif;
+}
+
+h1 {
+  font-size: 44rem;
+}
+
+h2 {
+  font-size: 4.4rem;
+  text-transform: uppercase;
+}
+
+b,
+strong {
+  font-weight: 700;
+}
+
+/************
+    TEXTES
+*************/
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.text-align-justify {
+  text-align: justify;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.text-bold {
+  font-weight: 700;
+}
+
+.text-content {
+  line-height: 2.8em;
+}
+
+/************
+    IMAGES
+*************/
+.img-max-100 {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.container {
+  width: calc(100% - 4.2rem);
+  max-width: 144rem;
+  margin: 0 auto;
+}
+
+.age {
+  padding: 3rem;
+  background-color: lightgreen;
+}
+
+.ages-grid {
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 1rem;
+}
+
+.age-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 1rem;
 }

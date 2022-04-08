@@ -20,7 +20,7 @@
             <div>{{ $message }}</div> @enderror
 
             <select type="select" id="category_id" name="category_id">
-                <option value="#">Choose</option>
+                <option value="1">Choose</option>
                 @foreach($categories as $category)
                     <option value="{{$category->id}}">{{$category->name}}</option>
                 @endforeach
@@ -29,7 +29,7 @@
             <div>{{$message}}</div> @enderror
 
             <select type="select" id="age_id" name="age_id">
-                <option value="#">Choose</option>
+                <option value="1">Choose</option>
             @foreach($ages as $age)
                     <option value="{{$age->id}}">{{$age->name}}</option>
                 @endforeach

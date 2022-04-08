@@ -1,11 +1,28 @@
-/* Toggle A */
-input:checked ~ .dot {
-    transform: translateX(100%);
-    background-color: #48bb78;
+@import "helpers/helpers";
+@import "base/base";
+@import "global/utilities";
+@import "global/container";
+
+.age {
+    padding: 3rem;
+
+    background-color: lightgreen;
+
 }
 
-/* Toggle B */
-input:checked ~ .dot {
-    transform: translateX(100%);
-    background-color: #48bb78;
+.ages-grid {
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1rem;
+}
+
+.age-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1rem;
+}
+
+.age-item {
+
 }

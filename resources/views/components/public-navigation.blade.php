@@ -5,7 +5,7 @@
             <a href="{{ route('dashboard') }}">
                 {{ __('Dashboard') }}
             </a>
-              |
+
             <a href="{{ route('posts.index') }}">
                 {{ __('posts') }}
             </a>

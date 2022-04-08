@@ -1,0 +1,24 @@
+@import "variables";
+@import "fonts";
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: $font-family-SchoolTeacherRegular;
+    font-size: 2rem;
+}
+
+
+#{headings(1,6)} {
+   font-family: $font-family-Haeresletter;
+}
+h1 {
+    font-size :44rem;
+}
+h2 {
+    font-size :4.4rem;
+    text-transform: uppercase;
+}
